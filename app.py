@@ -33,7 +33,7 @@ user_inputs_dict = {}
 
 # Definir los nombres y valores predeterminados para los campos de entrada
 input_params = {
-    'Alcohol': 13.09,
+    'Alcohol': 13.0,
     'Malic acid': 2.0,
     'Ash': 2.0,
     'Alcalinity of ash': 17.0,
