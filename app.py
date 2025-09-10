@@ -2,40 +2,47 @@ import streamlit as st
 import numpy as np
 import joblib
 
-# Cargar el modelo y el escalador
+# Cargar el modelo y el escalador (igual que antes)
 model = joblib.load('modelo_vino.joblib')
 scaler = joblib.load('escalador_vino.joblib')
 
-# Definir la función de predicción
-# Nota: La lógica del modelo es la misma.
 def predict_wine_variety(features):
     input_array = np.array(features).reshape(1, -1)
     scaled_input = scaler.transform(input_array)
     prediction = model.predict(scaled_input)
-    
     variety_names = ['Variedad A', 'Variedad B', 'Variedad C']
     return variety_names[int(prediction[0])]
 
-# --- Interfaz de Usuario con Streamlit ---
-# Título y descripción de la aplicación
+# Título de la app
 st.title('Clasificador de Variedad de Vino')
 st.markdown('Introduce las 13 características del vino para predecir su variedad.')
 
-# Crear una lista de nombres de características para los campos de entrada
-feature_names = ['Alcohol', 'Malic acid', 'Ash', 'Alcalinity of ash', 
-                 'Magnesium', 'Total phenols', 'Flavanoids', 
-                 'Nonflavanoid phenols', 'Proanthocyanins', 
-                 'Color intensity', 'Hue', 'OD280/OD315 of diluted wines', 'Proline']
+# Organizar los inputs en 3 columnas
+col1, col2, col3 = st.columns(3)
 
-# Crear campos de entrada de números para el usuario
 user_inputs = []
-for name in feature_names:
-    user_inputs.append(st.number_input(f'Valor de {name}:', value=0.0))
 
-# Botón para hacer la predicción
-if st.button('Predecir Variedad'):
-    # Llama a la función de predicción con los valores del usuario
-    predicted_variety = predict_wine_variety(user_inputs)
+with col1:
+    user_inputs.append(st.number_input('Alcohol', value=0.0))
+    user_inputs.append(st.number_input('Magnesium', value=0.0))
+    user_inputs.append(st.number_input('Color intensity', value=0.0))
+    user_inputs.append(st.number_input('Proline', value=0.0))
     
-    # Muestra el resultado
+with col2:
+    user_inputs.append(st.number_input('Malic acid', value=0.0))
+    user_inputs.append(st.number_input('Total phenols', value=0.0))
+    user_inputs.append(st.number_input('Hue', value=0.0))
+
+with col3:
+    user_inputs.append(st.number_input('Ash', value=0.0))
+    user_inputs.append(st.number_input('Flavanoids', value=0.0))
+    user_inputs.append(st.number_input('Proanthocyanins', value=0.0))
+    user_inputs.append(st.number_input('OD280/OD315', value=0.0))
+    user_inputs.append(st.number_input('Alcalinity of ash', value=0.0))
+    user_inputs.append(st.number_input('Nonflavanoid phenols', value=0.0))
+    
+
+# Botón y resultado
+if st.button('Predecir Variedad'):
+    predicted_variety = predict_wine_variety(user_inputs)
     st.success(f'La variedad de vino predicha es: **{predicted_variety}**')
