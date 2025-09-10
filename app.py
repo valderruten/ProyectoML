@@ -17,30 +17,29 @@ def predict_wine_variety(features):
 st.title('Clasificador de Variedad de Vino')
 st.markdown('Introduce las 13 características del vino para predecir su variedad.')
 
-# Organizar los inputs en 3 columnas
-col1, col2, col3 = st.columns(3)
+# Crear pestañas para organizar las entradas
+tab1, tab2 = st.tabs(["Características Físico-químicas", "Componentes Fenólicos"])
 
 user_inputs = []
 
-with col1:
+with tab1:
+    st.header("Características Físico-químicas")
     user_inputs.append(st.number_input('Alcohol', value=0.0))
+    user_inputs.append(st.number_input('Malic acid', value=0.0))
+    user_inputs.append(st.number_input('Ash', value=0.0))
+    user_inputs.append(st.number_input('Alcalinity of ash', value=0.0))
     user_inputs.append(st.number_input('Magnesium', value=0.0))
     user_inputs.append(st.number_input('Color intensity', value=0.0))
-    user_inputs.append(st.number_input('Proline', value=0.0))
-    
-with col2:
-    user_inputs.append(st.number_input('Malic acid', value=0.0))
-    user_inputs.append(st.number_input('Total phenols', value=0.0))
     user_inputs.append(st.number_input('Hue', value=0.0))
 
-with col3:
-    user_inputs.append(st.number_input('Ash', value=0.0))
+with tab2:
+    st.header("Componentes Fenólicos y Prolinas")
+    user_inputs.append(st.number_input('Total phenols', value=0.0))
     user_inputs.append(st.number_input('Flavanoids', value=0.0))
-    user_inputs.append(st.number_input('Proanthocyanins', value=0.0))
-    user_inputs.append(st.number_input('OD280/OD315', value=0.0))
-    user_inputs.append(st.number_input('Alcalinity of ash', value=0.0))
     user_inputs.append(st.number_input('Nonflavanoid phenols', value=0.0))
-    
+    user_inputs.append(st.number_input('Proanthocyanins', value=0.0))
+    user_inputs.append(st.number_input('OD280/OD315 of diluted wines', value=0.0))
+    user_inputs.append(st.number_input('Proline', value=0.0))
 
 # Botón y resultado
 if st.button('Predecir Variedad'):
